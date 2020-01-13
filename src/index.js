@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {combineReducers} from "redux";
+import timePickerReducer from './reducer';
+import TimePicker from './containers/TimePicker';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(combineReducers({timePickerReducer}));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+/**
+ * Date picker
+ *
+ * @returns {component}
+ * @param date
+ */
+
+ReactDOM.render(
+    <Provider store={store}>
+        <TimePicker onChange={''} store={store} />
+    </Provider>,
+    document.getElementById('react-time-picker'));
+
 serviceWorker.unregister();
+
+export {TimePicker, timePickerReducer};
